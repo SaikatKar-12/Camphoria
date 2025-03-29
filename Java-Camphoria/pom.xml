@@ -8,11 +8,11 @@
 		<version>3.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.club.connect</groupId>
-	<artifactId>Camphoria</artifactId>
+	<groupId>com.java.club.camphoria</groupId>
+	<artifactId>Java-Camphoria</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Camphoria</name>
-	<description>A web app to manage club activities </description>
+	<name>Java-Camphoria</name>
+	<description>Camphoria Java Backend</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -60,6 +60,19 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.5.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.5.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
