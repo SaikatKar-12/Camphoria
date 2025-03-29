@@ -1,4 +1,4 @@
-package com.java.club.camphoria.Java_Camphoria.Controlller;
+package com.java.club.camphoria.Java_Camphoria.Controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
