@@ -1,13 +1,13 @@
-package com.club.connect.Camphoria;
+package com.java.club.camphoria.Java_Camphoria;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CamphoriaApplication {
+public class JavaCamphoriaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CamphoriaApplication.class, args);
+		SpringApplication.run(JavaCamphoriaApplication.class, args);
 	}
 
 }
