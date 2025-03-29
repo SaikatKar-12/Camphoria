@@ -3,6 +3,7 @@ const express = require('express');
 const UserController = require('../../controllers/user-controller');
 const RoleController = require('../../controllers/role-controller');
 const ConvenorController = require('../../controllers/convenor-controller');    
+const teacherController = require('../../controllers/teacher-controller');
 const {AuthRequestValidators} = require('../../middlewares/index');
 
 const router = express.Router();
@@ -36,6 +37,22 @@ router.get(
     '/convenorisAuthenticated',
     ConvenorController.isAuthenticated
 );
+
+router.post(
+    '/teacherSignup',
+    //AuthRequestValidators.validateUserAuth,
+    teacherController.create
+);
+router.post(
+    '/teacherSignin',
+    //AuthRequestValidators.validateUserAuth,
+    teacherController.signIn
+);
+router.get(
+    '/teacherisAuthenticated',
+    teacherController.isAuthenticated
+);
+
 //router.get('/email',UserController.get);
 router.post(
     '/role',
