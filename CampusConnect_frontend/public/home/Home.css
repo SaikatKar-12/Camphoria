@@ -264,6 +264,8 @@ header{
 }
 
 .event{
+    overflow: hidden;
+    border-radius: 20px;
     background: var(--color-bg1);
     text-align: center;
     border: 1px solid transparent;
