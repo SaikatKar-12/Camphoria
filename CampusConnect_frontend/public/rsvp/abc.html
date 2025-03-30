@@ -142,3 +142,111 @@
   </div>
  </body>
 </html>
+<script>
+    // Example status values: 'confirmed', 'pending', 'cancelled'
+    let eventStatus = 'pending'; // Change this based on actual status
+  
+    function getStatusText(status) {
+      switch (status) {
+        case 'confirmed':
+          return { text: "You're In", color: 'text-green-400', icon: 'fa-smile' };
+        case 'pending':
+          return { text: "Pending Approval", color: 'text-yellow-400', icon: 'fa-hourglass-half' };
+        case 'cancelled':
+          return { text: "Cancelled", color: 'text-red-400', icon: 'fa-times-circle' };
+        default:
+          return { text: "Unknown Status", color: 'text-gray-400', icon: 'fa-question-circle' };
+      }
+    }
+  
+    document.addEventListener('DOMContentLoaded', function () {
+      let statusInfo = getStatusText(eventStatus);
+      document.getElementById('statusText').innerText = statusInfo.text;
+      document.getElementById('statusIcon').classList.add(statusInfo.icon, statusInfo.color);
+    });
+  </script>
+  
+  <div class="bg-gray-800 p-4 rounded-lg mb-4">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <i id="statusIcon" class="text-2xl mr-2"></i>
+        <p id="statusText" class="text-lg"></p>
+      </div>
+      <div class="flex items-center">
+        <button class="bg-green-500 text-black px-2 py-1 rounded-lg mr-2">
+          My Ticket
+        </button>
+        <button class="bg-gray-700 text-white px-2 py-1 rounded-lg">
+          Invite a Friend
+        </button>
+      </div>
+    </div>
+    <p class="mt-2 text-sm">
+      No longer able to attend? Notify the host by
+      <span class="underline cursor-pointer">
+        cancelling your registration
+      </span>.
+    </p>
+    <p class="mt-2 text-sm">
+      Get Ready for the Event
+    </p>
+    <p class="text-sm">
+      Profile Complete • Reminder: SMS & Email
+    </p>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      // Extract bookingId from URL query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const bookingId = urlParams.get('bookingId');
+      
+      if (!bookingId) {
+        console.error("Booking ID not found in URL");
+        updateStatusUI("unknown");
+        return;
+      }
+      console.log("Booking ID:", bookingId);
+      const apiUrl = `http://localhost:3002/api/v1/bookings/${bookingId}`;
+  
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        console.log(data.data);
+        if (data.success && data.data) {
+          let eventStatus = data.data.status;
+          updateStatusUI(eventStatus);
+        } else {
+          console.error("Error fetching booking data:", data.message);
+          updateStatusUI("unknown");
+        }
+      } catch (error) {
+        console.error("Failed to fetch booking status:", error);
+        updateStatusUI("unknown");
+      }
+    });
+  
+    function getStatusText(status) {
+      switch (status) {
+        case 'InProcess':
+          return { text: "In Process", color: 'text-blue-400', icon: 'fa-spinner' };
+        case 'Booked':
+          return { text: "You're Booked", color: 'text-green-400', icon: 'fa-check-circle' };
+        case 'Cancelled':
+          return { text: "Cancelled", color: 'text-red-400', icon: 'fa-times-circle' };
+        default:
+          return { text: "Unknown Status", color: 'text-gray-400', icon: 'fa-question-circle' };
+      }
+    }
+  
+    function updateStatusUI(status) {
+      let statusInfo = getStatusText(status);
+      let statusTextEl = document.getElementById('statusText');
+      let statusIconEl = document.getElementById('statusIcon');
+  
+      if (statusTextEl && statusIconEl) {
+        statusTextEl.innerText = statusInfo.text;
+        statusIconEl.className = `text-2xl mr-2 fas ${statusInfo.icon} ${statusInfo.color}`;
+      }
+    }
+  </script>
+  
