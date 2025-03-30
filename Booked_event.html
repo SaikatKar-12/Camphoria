@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Booking</title>
+    <!-- FontAwesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="event-card">
+      <div class="event-info">
+        <h2>Tech Conference 2025</h2>
+        <p>
+          <i class="fas fa-calendar-alt"></i> March 15, 2025 &nbsp;
+          <i class="fas fa-clock"></i> 9:00 AM - 5:00 PM &nbsp;
+          <i class="fas fa-map-marker-alt"></i> Convention Center, New York
+        </p>
+
+        <div class="event-status">
+          <i class="fas fa-check-circle"></i> Event Already Booked
+        </div>
+
+        <p class="event-desc">
+          Join us for an inspiring day of technology insights, networking, and
+          innovation. This conference brings together industry leaders and
+          experts to share their knowledge and experience in AI, blockchain, and
+          digital transformation.
+        </p>
+      </div>
+
+      <div class="event-details">
+        <p><i class="fas fa-ticket-alt"></i> Premium Pass</p>
+        <p><i class="fas fa-users"></i> 500 Attendees</p>
+        <p><i class="fas fa-wifi"></i> Free Wi-Fi</p>
+      </div>
+    </div>
+
+    <h3>Related Events</h3>
+    <div class="related-events">
+      <div class="event">
+        <p><strong>Design Summit</strong></p>
+        <p>
+          <i class="fas fa-calendar-alt"></i> April 5, 2025 |
+          <i class="fas fa-clock"></i> 10:00 AM - 4:00 PM
+        </p>
+        <span class="status available">Available</span>
+        <button class="view-details">View Details</button>
+      </div>
+      <div class="event">
+        <p><strong>AI Workshop</strong></p>
+        <p>
+          <i class="fas fa-calendar-alt"></i> April 12, 2025 |
+          <i class="fas fa-clock"></i> 9:00 AM - 3:00 PM
+        </p>
+        <span class="status available">Available</span>
+        <button class="view-details">View Details</button>
+      </div>
+      <div class="event">
+        <p><strong>Startup Meetup</strong></p>
+        <p>
+          <i class="fas fa-calendar-alt"></i> April 20, 2025 |
+          <i class="fas fa-clock"></i> 2:00 PM - 6:00 PM
+        </p>
+        <span class="status available">Available</span>
+        <button class="view-details">View Details</button>
+      </div>
+    </div>
+    <button class="more-events">View More Events</button>
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f8f9fc;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .event-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 900px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .event-info {
+        width: 65%;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      .event-status {
+        background: #e3effd;
+        padding: 8px 12px;
+        border-radius: 6px;
+        color: #007bff;
+        font-weight: bold;
+        display: inline-block;
+        margin: 10px 0;
+      }
+
+      .event-desc {
+        font-size: 14px;
+        color: #444;
+        line-height: 1.5;
+      }
+
+      .event-details {
+        background: #f8f9fc;
+        padding: 15px;
+        border-radius: 8px;
+        width: 30%;
+        text-align: left;
+      }
+
+      .event-details p {
+        margin: 5px 0;
+        font-size: 14px;
+      }
+
+      .event-details i {
+        color: #007bff;
+        margin-right: 5px;
+      }
+
+      .related-events {
+        display: flex;
+        gap: 15px;
+        width: 80%;
+        max-width: 900px;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      .event {
+        flex: 1;
+        text-align: center;
+        border-left: 4px solid #007bff;
+        padding: 15px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .status.available {
+        color: green;
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+
+      .view-details,
+      .more-events {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s;
+        font-size: 14px;
+      }
+
+      .view-details:hover,
+      .more-events:hover {
+        background: #0056b3;
+        transform: scale(1.05);
+      }
+
+      .more-events {
+        display: block;
+        margin: 20px auto;
+        width: fit-content;
+      }
+    </style>
+
+    <script>
+      document.querySelectorAll(".view-details").forEach((button) => {
+        button.addEventListener("click", () => {
+          alert("More details coming soon!");
+        });
+      });
+
+      document.querySelector(".more-events").addEventListener("click", () => {
+        alert("Redirecting to more events...");
+      });
+    </script>
+  </body>
+</html>
