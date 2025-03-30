@@ -107,22 +107,18 @@ function createEventCard(event, venueName, clubName) {
 
   const imageBox = document.createElement('div');
   imageBox.classList.add('image-box');
-  
-  // Create an image element
+
   const image = document.createElement('img');
-  // Set the image source to the provided URL
   image.src = '../images/' + event.name + '.jpg';
-  // Append the image to the image box
   imageBox.appendChild(image);
 
   const contentBox = document.createElement('div');
   contentBox.classList.add('content-box');
 
-  // Title
   const title = document.createElement('span');
   title.classList.add('card-title');
   title.textContent = event.name;
-  
+
   const content = document.createElement('p');
   content.classList.add('card-content');
 
@@ -134,61 +130,64 @@ function createEventCard(event, venueName, clubName) {
   club.textContent = `Club: ${clubName}`;
   content.appendChild(club);
 
-  const startingTime = event.startingTime;
-  const endingTime = event.endingTime;
-
-  const formattedStartingTime = formatDateTime(startingTime);
-  const formattedEndingTime = formatDateTime(endingTime);
-
   const startTime = document.createElement('p');
-  startTime.textContent = `Start Time: ${formattedStartingTime}`;
+  startTime.textContent = `Start Time: ${formatDateTime(event.startingTime)}`;
   content.appendChild(startTime);
 
   const endTime = document.createElement('p');
-  endTime.textContent = `End Time: ${formattedEndingTime}`;
+  endTime.textContent = `End Time: ${formatDateTime(event.endingTime)}`;
   content.appendChild(endTime);
 
   const price = document.createElement('p');
   price.textContent = `Price: ${event.price === 0 ? 'Free' : event.price}`;
   content.appendChild(price);
 
-  const seeMore = document.createElement('span');
-  seeMore.classList.add('see-more');
-  seeMore.textContent = 'Register';
+  const registerBtn = document.createElement('span');
+  registerBtn.classList.add('see-more');
+  registerBtn.textContent = 'Register';
+
+  // Add event listener for registration
+  registerBtn.addEventListener('click', async () => {
+    const userId = localStorage.getItem('userid');
   
+    if (!userId) {
+      alert('Please log in first!');
+      return;
+    }
+  
+    try {
+      const response = await fetch('http://localhost:3002/api/v1/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, EventId: event.id }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        const bookingId = data.data.id; // Extract booking ID from response
+        console.log(data);
+        console.log(bookingId);
+        window.location.href = `../rsvp/pending.html?bookingId=${bookingId}`;
+      } else {
+        const errorData = await response.json();
+        alert('Registration failed: ' + (errorData.message || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error registering for event:', error);
+      alert('Something went wrong. Please try again.');
+    }
+  });
+  
+
   contentBox.appendChild(title);
   contentBox.appendChild(content);
-  contentBox.appendChild(seeMore);
-  
-  const dateBox = document.createElement('div');
-    dateBox.classList.add('date-box');
+  contentBox.appendChild(registerBtn);
 
-    // Month
-    var datestring = new Date(formattedStartingTime);
-    var monthIndex = datestring.getMonth();
-    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var monthName = months[monthIndex];
-    const month = document.createElement('span');
-    month.classList.add('month');
-    month.textContent = monthName;
+  card.appendChild(imageBox);
+  card.appendChild(contentBox);
 
-    // Date
-    var datestring = new Date(formattedStartingTime);
-    var dateNumber = datestring.getDate().toString();
-    const date = document.createElement('span');
-    date.classList.add('date');
-    date.textContent = dateNumber;
-
-    // Append elements to date box
-    dateBox.appendChild(month);
-    dateBox.appendChild(date);
-
-    // Append content and date box to card
-    card.appendChild(imageBox);
-    card.appendChild(contentBox);
-    card.appendChild(dateBox);
-
-    // Append card to container
-    document.getElementById('cardContainer').appendChild(card);
+  document.getElementById('cardContainer').appendChild(card);
   return card;
 }

@@ -7,6 +7,6 @@ window.onload = function() {
       var preloader = document.getElementById('preloader');
       preloader.style.display = 'none';
       document.body.style.overflow = ''; // Restore default scrolling behavior
-    }, 5000); // 3000 milliseconds = 3 seconds
+    }, 2000); // 3000 milliseconds = 3 seconds
   };
   
