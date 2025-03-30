@@ -4,7 +4,6 @@ const cors = require("cors");
 
 const { PORT } = require('./config/serverConfig');
 const ApiRoutes = require('./routes/index'); 
-//const cors = require("cors");
 
 const setupAndStartServer = async()=>{
 

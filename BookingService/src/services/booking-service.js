@@ -27,9 +27,57 @@ class BookingService {
             const updateEventRequestURL = `${Event_SERVICE_PATH}/api/v1/event/${booking.eventId}`;
             console.log(updateEventRequestURL);
             const update_response = await axios.patch(updateEventRequestURL, {totalSeats: eventData.total_seats - booking.noOfSeats});
-            const finalBooking = await this.bookingRepository.update(booking.id, {status: "Booked"});
+            const finalBooking = await this.bookingRepository.update(booking.id, {status: "InProcess"});
             return finalBooking;
         } catch (error) { 
+            console.log(error);
+            if(error.name == 'RepositoryError' || error.name == 'ValidationError') {
+                throw error;
+            }
+            throw new ServiceError();
+        }
+    }
+    async updateBooking(bookingId) {
+        try {
+            const booking = await this.bookingRepository.update(bookingId, {status: "Booked"});
+            return booking;
+        } catch (error) {
+            console.log(error);
+            if(error.name == 'RepositoryError' || error.name == 'ValidationError') {
+                throw error;
+            }
+            throw new ServiceError();
+        }
+    }
+    async getBookingById(bookingId) {
+        try {
+            const booking = await this.bookingRepository.getBookingById(bookingId);
+            return booking;
+        } catch (error) {
+            console.log(error);
+            if(error.name == 'RepositoryError' || error.name == 'ValidationError') {
+                throw error;
+            }
+            throw new ServiceError();
+        }
+    }
+    async getAllBookings() {
+        try {
+            const bookings = await this.bookingRepository.getAllBookings();
+            return bookings;
+        } catch (error) {
+            console.log(error);
+            if(error.name == 'RepositoryError' || error.name == 'ValidationError') {
+                throw error;
+            }
+            throw new ServiceError();
+        }
+    }
+    async getBookingByUserId(userId) {
+        try {
+            const bookings = await this.bookingRepository.getAllBookingsByUserId(userId);
+            return bookings;
+        } catch (error) {
             console.log(error);
             if(error.name == 'RepositoryError' || error.name == 'ValidationError') {
                 throw error;

@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     collegeId: {
       type:DataTypes.INTEGER,
-      allowNull:false
+      //allowNull:false
     },
     total_seats: {
       type:DataTypes.INTEGER,

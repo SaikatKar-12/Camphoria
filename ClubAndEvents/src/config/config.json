@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "iamsaikat12#",
-    "database": "Event_DB_DEV",
+    "database": "new_Campus2_DB_DEV",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

@@ -43,13 +43,13 @@ module.exports = {
       },
       collegeId: {
         type: Sequelize.INTEGER,
-        onDelete:'CASCADE',
-        references:{
-          model:'Colleges',
-          key:'id',
-          as:'collegeId'
-        },
-        allowNull:false
+        // onDelete:'CASCADE',
+        // references:{
+        //   model:'Colleges',
+        //   key:'id',
+        //   as:'collegeId'
+        // },
+        // allowNull:false
       },
       total_seats: {
         type: Sequelize.INTEGER,

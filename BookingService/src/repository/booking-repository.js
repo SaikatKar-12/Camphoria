@@ -36,6 +36,53 @@ class BookingRepository {
                 StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }
+    async getBookingById(bookingId) {
+        try {
+            const booking = await Booking.findByPk(bookingId);
+            if(!booking) {
+                throw new AppError(
+                    'RepositoryError', 
+                    'Cannot find Booking', 
+                    'There was some issue finding the booking, please try again later',
+                    StatusCodes.NOT_FOUND);
+            }
+            return booking;
+        } catch (error) {
+            throw new AppError(
+                'RepositoryError', 
+                'Cannot find Booking', 
+                'There was some issue finding the booking, please try again later',
+                StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async getAllBookings() {
+        try {
+            const bookings = await Booking.findAll();
+            return bookings;
+        } catch (error) {
+            throw new AppError(
+                'RepositoryError', 
+                'Cannot find Bookings', 
+                'There was some issue finding the bookings, please try again later',
+                StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async getAllBookingsByUserId(userId) {
+        try {
+            const bookings = await Booking.findAll({
+                where: {
+                    userId: userId
+                }
+            });
+            return bookings;
+        } catch (error) {
+            throw new AppError(
+                'RepositoryError', 
+                'Cannot find Bookings', 
+                'There was some issue finding the bookings, please try again later',
+                StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 
 module.exports = BookingRepository;

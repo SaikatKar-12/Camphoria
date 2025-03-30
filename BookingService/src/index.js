@@ -6,6 +6,10 @@ const {PORT} = require('./config/serverConfig');
 const apiRoutes = require('./routes/index');
 const db = require('./models/index');
 
+const cors = require("cors");
+
+app.use(cors());
+
 const setupAndStartServer = () => {
 
     app.use(bodyParser.json());
