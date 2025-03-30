@@ -100,9 +100,11 @@
         </p>
        </div>
        <div class="flex items-center">
-        <button class="bg-green-500 text-black px-2 py-1 rounded-lg mr-2">
-         My Ticket
-        </button>
+        <button class="bg-green-500 text-black px-2 py-1 rounded-lg mr-2" 
+        id="qrButton">
+    My Ticket
+</button>
+        
         <button class="bg-gray-700 text-white px-2 py-1 rounded-lg">
          Invite a Friend
         </button>
@@ -196,36 +198,77 @@
   </div> -->
   <script>
     document.addEventListener('DOMContentLoaded', async function () {
-      // Extract bookingId from URL query parameters
-      const urlParams = new URLSearchParams(window.location.search);
-      const bookingId = urlParams.get('bookingId');
-      
-      if (!bookingId) {
+    // Extract bookingId from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookingId = urlParams.get('bookingId');
+
+    if (!bookingId) {
         console.error("Booking ID not found in URL");
         updateStatusUI("unknown");
         return;
-      }
-      console.log("Booking ID:", bookingId);
-      const apiUrl = `http://localhost:3002/api/v1/bookings/${bookingId}`;
-  
-      try {
+    }
+    console.log("Booking ID:", bookingId);
+    const apiUrl = `http://localhost:3002/api/v1/bookings/${bookingId}`;
+
+    try {
         const response = await fetch(apiUrl);
         const data = await response.json();
         console.log(data.data);
+
         if (data.success && data.data) {
-          let eventStatus = data.data.status;
-          updateStatusUI(eventStatus);
+            let booking = data.data;
+            updateStatusUI(booking.status);
+
+            // Add event listener to the button after data is fetched
+            document.getElementById('qrButton').addEventListener('click', function () {
+                generateQR(booking.userId, booking.id);
+            });
         } else {
-          console.error("Error fetching booking data:", data.message);
-          updateStatusUI("unknown");
+            console.error("Error fetching booking data:", data.message);
+            updateStatusUI("unknown");
         }
-      } catch (error) {
+    } catch (error) {
         console.error("Failed to fetch booking status:", error);
         updateStatusUI("unknown");
-      }
-    });
-  
-    function getStatusText(status) {
+    }
+});
+
+async function generateQR(userId, eventId) {
+    try {
+        const formData = new URLSearchParams();
+        formData.append('userId', userId);
+        formData.append('eventId', eventId);
+
+        const response = await fetch(
+            'https://rich-myrtice-campusconnect-a9680a04.koyeb.app/api/payment/generateQR',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Failed to generate QR code');
+        }
+
+        const blob = await response.blob();
+        const qrUrl = URL.createObjectURL(blob);
+
+        // Create a link to download the QR code
+        const link = document.createElement('a');
+        link.href = qrUrl;
+        link.download = `qr_${userId}_${eventId}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        console.log(`QR code downloaded as qr_${userId}_${eventId}.png`);
+    } catch (error) {
+        console.error('Error generating QR code:', error.message);
+    }
+}
+function getStatusText(status) {
       switch (status) {
         case 'InProcess':
           return { text: "In Process", color: 'text-blue-400', icon: 'fa-spinner' };
@@ -248,5 +291,6 @@
         statusIconEl.className = `text-2xl mr-2 fas ${statusInfo.icon} ${statusInfo.color}`;
       }
     }
+
   </script>
   

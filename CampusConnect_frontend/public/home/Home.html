@@ -65,29 +65,91 @@
         </svg>
       </div>
 
-    <nav>
-        <div class = "container nav_container">
-            <img src="logoname.png" alt="HTML5 Icon" style="width: 300px;height:45px;">
-            <!-- <a href="Home.html"><h4>CAMPUS CONNECT</h4></a> -->
-            <ul class="nav_menu">
-            
-                <li><a href="Home.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="../clubPage/clubPage.html">Clubs</a></li>
-                <li><a href="../eventpage/index.html">Events</a></li>
-                <li><a href="Contact.html">Contact</a></li>
-                <!-- <li><a id="chatLink" href="http://localhost:5000/chat/103">Chat</a></li> -->
-                <li id="request-element" style="display: none;"><a href="../permission/index.html">Requests</a></li>
-                <li class="login-buttons">
-                    <button class="translate" id="chatLink" style="display: none;">Chatbox</button>
-                    <button class="translate" id="login-btn" style="display: none;">Login</button>
-                    <button class="translate" id="logout-btn" style="display: none;">Logout</button>
-                </li>
-            </ul>
-            <button id="open-menu-btn"><i class="uil uil-bars"></i></button>
-            <button id="close-menu-btn"><i class="uil uil-multiply"></i></button>
+      <style>
+        .scanner-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .scanner-modal video {
+        width: 300px;
+        height: 200px;
+    }
+    
+    .scanner-modal button {
+        margin-top: 10px;
+        padding: 8px 15px;
+        cursor: pointer;
+    }
+    
+     </style>
+          <nav>
+            <div class="container nav_container">
+                <img src="logoname.png" alt="HTML5 Icon" style="width: 300px;height:45px;">
+                <ul class="nav_menu">
+                    <li><a href="Home.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="../clubPage/clubPage.html">Clubs</a></li>
+                    <li><a href="../eventpage/index.html">Events</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                    <li id="approval-section" style="display: none;"><a href="../approval/approval.html">Approval</a></li>
+                    <li><a href="../rsvp/bookings.html">Bookings</a></li>
+                    <li id="request-element" style="display: none;"><a href="../permission/index.html">Requests</a></li>
+                    <li class="login-buttons">
+                        <button class="translate" id="chatLink" style="display: none;">Chatbox</button>
+                        <button class="translate" id="login-btn" style="display: none;">Login</button>
+                        <button class="translate" id="logout-btn" style="display: none;">Logout</button>
+                    </li>
+                </ul>
+        
+                <!-- Scanner Icon (clickable) -->
+                <a href="javascript:void(0)" id="scanner-icon" style="font-size: 1.5em; margin: 0 10px;">
+                    <i class="uil uil-camera"></i>
+                </a>
+        
+                <button id="open-menu-btn"><i class="uil uil-bars"></i></button>
+                <button id="close-menu-btn"><i class="uil uil-multiply"></i></button>
+            </div>
+        </nav>
+        
+        <!-- Scanner Modal -->
+        <div id="scanner-modal" class="scanner-modal" style="display: none;">
+            <video id="scanner-video" autoplay></video>
+            <button id="close-scanner">Close</button>
         </div>
-    </nav>
+    <script>
+        document.getElementById("scanner-icon").addEventListener("click", async () => {
+        const scannerModal = document.getElementById("scanner-modal");
+        const scannerVideo = document.getElementById("scanner-video");
+    
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            scannerVideo.srcObject = stream;
+            scannerModal.style.display = "block";
+        } catch (error) {
+            alert("Camera access denied or unavailable.");
+        }
+    });
+    
+    document.getElementById("close-scanner").addEventListener("click", () => {
+        const scannerVideo = document.getElementById("scanner-video");
+        const stream = scannerVideo.srcObject;
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+        }
+        document.getElementById("scanner-modal").style.display = "none";
+    });
+    
+    </script>
 <!--------------------------NAV END--------------------------------------->
 
     <header>
