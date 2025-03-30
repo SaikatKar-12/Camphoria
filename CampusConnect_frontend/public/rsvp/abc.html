@@ -93,10 +93,10 @@
      <div class="bg-gray-800 p-4 rounded-lg mb-4">
       <div class="flex items-center justify-between">
        <div class="flex items-center">
-        <i class="fas fa-smile text-2xl mr-2">
+        <i id="statusIcon" class="text-2xl mr-2">
         </i>
-        <p class="text-lg">
-         You're In
+        <p id="statusText" class="text-lg">
+         
         </p>
        </div>
        <div class="flex items-center">
@@ -166,7 +166,7 @@
     });
   </script>
   
-  <div class="bg-gray-800 p-4 rounded-lg mb-4">
+  <!-- <div class="bg-gray-800 p-4 rounded-lg mb-4">
     <div class="flex items-center justify-between">
       <div class="flex items-center">
         <i id="statusIcon" class="text-2xl mr-2"></i>
@@ -193,7 +193,7 @@
     <p class="text-sm">
       Profile Complete • Reminder: SMS & Email
     </p>
-  </div>
+  </div> -->
   <script>
     document.addEventListener('DOMContentLoaded', async function () {
       // Extract bookingId from URL query parameters
