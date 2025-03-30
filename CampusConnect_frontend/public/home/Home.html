@@ -76,6 +76,8 @@
                 <li><a href="../clubPage/clubPage.html">Clubs</a></li>
                 <li><a href="../eventpage/index.html">Events</a></li>
                 <li><a href="Contact.html">Contact</a></li>
+                <li><a href="../approval/approval.html">Approvals</a></li>
+                <li><a href="../rsvp/bookings.html">Bookings</a></li>
                 <!-- <li><a id="chatLink" href="http://localhost:5000/chat/103">Chat</a></li> -->
                 <li id="request-element" style="display: none;"><a href="../permission/index.html">Requests</a></li>
                 <li class="login-buttons">
@@ -529,6 +531,8 @@
             console.log('User is authenticated and token is valid');
             console.log(data);
             localStorage.setItem('userid',data.data);
+            let a=localStorage.getItem('userid');
+            console.log(a);
             document.getElementById('logout-btn').style.display = 'inline-block';
             checkIfUserIsTeacher();
             checkIfUserIsConvenor();
